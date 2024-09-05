@@ -1,78 +1,70 @@
+-- DATASET: Retail Sales Dataset
+-- SOURCE:https://www.kaggle.com/datasets/mohammadtalib786/retail-sales-dataset
+
+
 -- CREATE DATABASE retail
 
 -- ALTER TABLE transactions_data
 -- CHANGE COLUMN `total _amount` total_amount INT;
 
 -- Determinar el total de ventas por categoria de producto
-SELECT product_category, 
-  sum(total_amount) as 'Total Ventas'
+
+SELECT product_category, sum(total_amount) as 'Total Ventas'
 FROM transactions_data
 GROUP BY product_category
 ORDER BY 'Total Ventas';
 
 -- Cantiadad de transacciones por genero y edad
-SELECT gender, age, COUNT(transaction_id) AS 'Transacciones Totales'
+
+SELECT gender, age, 
+COUNT(transaction_id) AS 'Transacciones Totales'
 FROM customer_data
 GROUP BY gender, age;
 
 -- Cantidad de transacciones por edad
-select age, count(transaction_id) as 'Transacciones Totales'
-from customer_data
-group by age
-order by age desc;
+
+SELECT age, count(transaction_id) as 'Transacciones Totales'
+FROM customer_data
+GROUP BY age
+ORDER BY age desc;
 
 -- Cantidad de transacciones por genero
+
 select gender, count(transaction_id) as 'Transacciones Totales'
 from customer_data
 group by gender
 order by gender desc;
 
 -- Cantidad de dinero gastado por genero y edad
-SELECT 
-    c.gender, 
-    c.age, 
-    COUNT(t.transaction_id) AS 'Transacciones Totales',
-    SUM(t.total_amount) AS 'Total Gastado'
-FROM 
-    customer_data c
-LEFT JOIN 
-    transactions_data t 
-ON 
-    c.transaction_id = t.transaction_id
-GROUP BY 
-    c.gender, 
-    c.age
-ORDER BY 
-    `Total Gastado` DESC;
+
+SELECT c.gender, c.age, COUNT(t.transaction_id) AS 'Transacciones Totales', SUM(t.total_amount) AS 'Total Gastado'
+FROM customer_data c
+LEFT JOIN transactions_data t 
+ON c.transaction_id = t.transaction_id
+GROUP BY c.gender, c.age
+ORDER BY `Total Gastado` DESC;
 
 -- Cantidad de dinero gastado por genero
-SELECT
-gender, 
-count(c.transaction_id) as 'Transacciones Totales',
-sum(total_amount) as 'Total Gastado'
+
+SELECT gender, count(c.transaction_id) as 'Transacciones Totales', sum(total_amount) as 'Total Gastado'
 FROM customer_data c
 LEFT JOIN transactions_data t ON c.Transaction_id = t.Transaction_id
 GROUP BY gender;
 
 -- Cantidad de transacciones, dinero gastado y categoria de producto por genero
-SELECT 
-    c.gender, 
-    t.product_category,
-    COUNT(t.transaction_id) AS 'Transacciones Totales',
-    SUM(t.total_amount) AS 'Total Gastado'
-FROM 
-    customer_data c
-LEFT JOIN 
-    transactions_data t 
-ON 
-    c.transaction_id = t.transaction_id
-GROUP BY 
-    c.gender, 
-    t.product_category
-ORDER BY 
-    `Total Gastado` DESC;
+
+SELECT  c.gender, 
+t.product_category,
+COUNT(t.transaction_id) AS 'Transacciones Totales',
+SUM(t.total_amount) AS 'Total Gastado'
+FROM customer_data c
+LEFT JOIN transactions_data t 
+ON  c.transaction_id = t.transaction_id
+GROUP BY c.gender, t.product_category
+ORDER BY `Total Gastado` DESC;
     
 -- Días con mas ventas
+
 SELECT
 date AS 'Day',
 sum(total_amount) as 'Total Sales'
@@ -81,6 +73,7 @@ GROUP BY Day
 ORDER BY `Total Sales` DESC;
 
 -- Días con ventas superiores a los 5000 usd
+
 SELECT
 date AS 'Day',
 sum(total_amount) as 'Total Sales'
@@ -90,6 +83,7 @@ HAVING sum(total_amount) > 5000
 ORDER BY `Total Sales` DESC;
 
 -- Identificacion de clientes regulares 
+
 SELECT
 c.customer_id,
 count(c.transaction_id) as 'ComprasTotales',
