@@ -1,2 +1,7 @@
 DATABASE NAME: Customer Purchasing Behaviors
 SOURCE: https://www.kaggle.com/datasets/hanaksoy/customer-purchasing-behaviors
+
+CREATE DATABASE CustomerPurchasingBehavior
+USE CustomerPurchasingBehavior
+
+
